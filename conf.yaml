@@ -12,7 +12,7 @@ subreddits:
         delay: 0
         life_time: 1
         post_life_time: 24
-sender:
+mail:
     email_addr: "no-reply@example.com"
     mail_server: "mail.example.com"
     mail_server_port: 25
