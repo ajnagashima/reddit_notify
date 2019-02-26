@@ -55,8 +55,8 @@ class Subreddit:
         self.store_on_notify = bool(store_on_notify)
         self.key_words = key_words.split(",")
         self.delay = int(delay)
-        self.life_time = int(life_time)
-        self.post_life_time = int(post_life_time)
+        self.life_time = int(life_time) * 60
+        self.post_life_time = int(post_life_time) * 60 * 60
 
         return 0
 
