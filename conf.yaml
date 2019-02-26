@@ -1,6 +1,4 @@
 credentials:
-    username: "example"
-    password: "password"
     client_id: "id123"
     client_secret: "secret456"
     user_agent: "notify_boy"
@@ -12,3 +10,6 @@ subreddits:
         store_on_notify: False
         key_words: "example, keyword, keywords"
         delay: 0
+sender:
+    email_addr: "no-reply@example.com"
+    sms_number: "55555"

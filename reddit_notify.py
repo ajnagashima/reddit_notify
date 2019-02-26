@@ -1,3 +1,4 @@
+import sys
 # package praw
 import praw
 # package pyyaml
@@ -13,21 +14,30 @@ def main():
     try:
         creds = config["credentials"]
     except:
-        error("credentials not found, use keyword 'credentials' in config.yaml")
+        error("\ncredentials not found, use keyword 'credentials' in config.yaml")
     print("DONE.")
 
     print("Extracting subreddits...", end = "")
     try:
         sub_data = config["subreddits"]
     except:
-        error("subreddits not found, use keyword 'subreddits' in config.yaml")
+        error("\nsubreddits not found, use keyword 'subreddits' in config.yaml")
     print("DONE.")
 
+    print("Validating Subreddits...", end="")
     subreddits = []
     for sub in sub_data.items():
         subreddits.append(Subreddit(sub))
+    print("DONE.")
 
-
+    reddit = []
+    try:
+        reddit = praw.Reddit(
+            client_id=creds['client_id'], 
+            client_secret=creds['client_secret'],
+            user_agent=creds['user_agent'])
+    except:
+        error("Bad Credentials")
 
 def importConfig():
     print("Importing config.yaml...", end = "")
@@ -40,12 +50,12 @@ def importConfig():
             except yaml.YAMLError as exc:
                 error(exc)
     except Exception as exc:
-        error(exc)
+        error("n"+str(exc))
 
 
 def error(msg):
-    print("\nERROR: ", msg)
-    exit()
+    print("ERROR: ", msg)
+    sys.exit(1)
 
 if __name__ == "__main__":
     main()
