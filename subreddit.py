@@ -8,7 +8,8 @@ class Subreddit:
             store_on_notify=False, 
             key_words='', 
             delay=0,
-            life_time=0):
+            life_time=0, 
+            post_life_time=24):
         try:
             if int(crawl_rate) < 0:
                 print("ERROR: crawl_rate cannot be negative")
@@ -40,6 +41,13 @@ class Subreddit:
         except:
             print("ERROR: life_time is NaN")
             return 1
+
+        try:
+            if int(post_life_time < 0):
+                print("ERROR: life_time cannot be negative")
+                return 1
+        except:
+            print("ERROR: post_life_time is NaN")
         
         self.crawl_rate = int(crawl_rate)
         self.sort_by = sort_by
@@ -48,6 +56,7 @@ class Subreddit:
         self.key_words = key_words.split(",")
         self.delay = int(delay)
         self.life_time = int(life_time)
+        self.post_life_time = int(post_life_time)
 
         return 0
 
@@ -59,7 +68,8 @@ class Subreddit:
             str(self.store_on_notify) + ",\n\t" +
             str(self.key_words) + ",\n\t" +
             str(self.delay) + ",\n\t" +
-            str(self.life_time))
+            str(self.life_time) + ",\n\t" +
+            str(self.post_life_time))
 
     def __init__(self, data):
         self.name = data[0]
