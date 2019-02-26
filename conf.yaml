@@ -6,7 +6,7 @@ subreddits:
     r/sub1:
         crawl_rate: 20
         sort_by: "NEW"
-        recipient: "email@example.com, 5555555555"
+        recipient: "email@example.com"
         store_on_notify: False
         key_words: "example, keyword, keywords"
         delay: 0
@@ -14,4 +14,5 @@ subreddits:
         post_life_time: 24
 sender:
     email_addr: "no-reply@example.com"
-    sms_number: "55555"
+    mail_server: "mail.example.com"
+    mail_server_port: 25
