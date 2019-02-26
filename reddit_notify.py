@@ -2,11 +2,13 @@
 import praw
 # package pyyaml
 import yaml
+# import subreddit
+from subreddit import Subreddit
 
 def main():
     config = importConfig()
     creds = []
-    subreddits = []
+    sub_data = []
     print("Extracting credentials...", end = "")
     try:
         creds = config["credentials"]
@@ -16,13 +18,17 @@ def main():
 
     print("Extracting subreddits...", end = "")
     try:
-        subreddits = config["subreddits"]
+        sub_data = config["subreddits"]
     except:
         error("subreddits not found, use keyword 'subreddits' in config.yaml")
     print("DONE.")
 
-    print(creds)
-    print(subreddits)
+    subreddits = []
+    for sub in sub_data.items():
+        subreddits.append(Subreddit(sub))
+
+
+
 def importConfig():
     print("Importing config.yaml...", end = "")
     try:

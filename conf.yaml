@@ -9,6 +9,6 @@ subreddits:
         crawl_rate: 120
         sort_by: "NEW"
         recipient: "email@example.com, 5555555555"
-        store_on_notify: true
+        store_on_notify: False
         key_words: "example, keyword, keywords"
         delay: 0
