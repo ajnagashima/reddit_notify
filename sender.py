@@ -22,7 +22,7 @@ class Sender:
         msg.attach(MIMEText(body, 'plain'))
         server = []
         try:
-            server = smtplib.SMTP(self.mail_server, 25)
+            server = smtplib.SMTP(self.mail_server, self.mail_server_port)
         except:
             print("FATAL: no mail serveri conf")
             exit(1)
@@ -44,3 +44,10 @@ class Sender:
             self.mail_server = data['mail_server']
         except:
             print("WARN: no mail server in conf")
+        try:
+            if int(data['mail_server_port']) > 0:
+                self.mail_server_port = int(data['mail_server_port'])
+            else:
+                exit()
+        except:
+            print("WARN: bad or missing server port in conf")

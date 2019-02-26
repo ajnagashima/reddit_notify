@@ -33,7 +33,7 @@ def crawl(sub, reddit, sender, run_event):
             file.write("{}\n".format(json.dumps(post)))
 
     if len(new_posts):
-    notify_new(sub, new_posts, sender)
+        notify_new(sub, new_posts, sender)
 
     notify_done(sub, sender)
     if sub.store_on_notify:
