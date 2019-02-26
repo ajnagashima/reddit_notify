@@ -49,7 +49,7 @@ def check_new(sub, reddit, posts):
     for post in sort_method():
         if post.id in found_ids:
             posts = [(k, v) if (k!=post.id) else (post.id, time.time()) for (k,v) in posts]
-        elif any(word in post.title or word in post.selftext for word in sub.key_words):
+        elif any(word in post.title.lower() or word in post.selftext.lower() for word in sub.key_words):
             posts.append((post.id, time.time()))
             new_posts.append({
                 "title":post.title,
