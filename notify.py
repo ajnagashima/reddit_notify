@@ -59,6 +59,7 @@ def check_new(sub, reddit, posts):
     return new_posts
 
 def notify_new(sub, posts, mail):
+    print("Found new posts from ", sub.name)
     for recipient in sub.recipients:
         mail.send_posts(recipient, sub, posts)
 

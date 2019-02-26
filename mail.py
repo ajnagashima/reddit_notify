@@ -37,7 +37,28 @@ class Mail:
 
 
     def send_msg(self, toaddr, subject, body):
-        print("send message called")
+        msg = MIMEMultipart()
+        try:
+            msg['From'] = self.email_addr
+        except:
+            print("FATAL: no email address to send from")
+            exit(1)
+        msg['To'] = toaddr
+        msg['Subject'] = subject
+        msg['Date'] = formatdate(localtime=True)
+        msg.attach(MIMEText(body, 'plain'))
+        server = []
+        try:
+            server = smtplib.SMTP(self.mail_server, self.mail_server_port)
+        except:
+            print("FATAL: bad mail server configuration! check conf.yaml")
+            exit(1)
+        server.starttls()
+        text = msg.as_string()
+        server.sendmail(self.email_addr, toaddr, text)
+        server.quit()
+
+
 
     def __init__(self, data):
         try:
