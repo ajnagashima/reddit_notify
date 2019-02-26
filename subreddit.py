@@ -1,3 +1,5 @@
+import sys
+
 class Subreddit:
     def extract_features(self,
             crawl_rate=60, 
@@ -6,12 +8,38 @@ class Subreddit:
             store_on_notify=False, 
             key_words='', 
             delay=0):
-        self.crawl_rate = crawl_rate
+        try:
+            if int(crawl_rate) < 0:
+                print("ERROR: crawl_rate cannot be negative")
+                return 1
+        except:
+            print("ERROR: crawl_rate is NaN")
+            return 1
+
+        if str(sort_by).lower() not in ["new", "hot", "top"]:
+            print("ERROR: sort_by must be 'NEW', 'HOT' or 'TOP'")
+            return 1
+
+        if not isinstance(store_on_notify, bool):
+            print("ERROR: stone_on_notify is not type bool")
+            return 1
+
+        try:
+            if int(delay) < 0:
+                print("ERROR: delay cannot be negative")
+                return 1
+        except:
+            print("ERROR: delay is NaN")
+            return 1
+        
+        self.crawl_rate = int(crawl_rate)
         self.sort_by = sort_by
-        self.recipient = recipient
-        self.store_on_notify = store_on_notify
-        self.key_words =  key_words
-        self.delay =  delay
+        self.recipient = recipient.split(",")
+        self.store_on_notify = bool(store_on_notify)
+        self.key_words =  key_words.split(",")
+        self.delay =  int(delay)
+
+        return 0
 
     def __str__(self):
         return (str(self.name) + ":\n\t" +
@@ -26,7 +54,10 @@ class Subreddit:
         self.name = data[0]
         if self.name[0:2] != "r/" or "/" in self.name[2:]:
             print("ERROR: bad subreddit name\nEXPECTED: 'r/...'\nRECEIVED: ",self.name)
-            exit()
-        self.extract_features(**data[1])
-        print(self)
+            sys.exit(1)
+
+        if self.extract_features(**data[1]) == 1:
+            sys.exit(1)
+
+#       print(self)
 
