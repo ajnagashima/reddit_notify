@@ -8,7 +8,7 @@ from subreddit import Subreddit
 # import notify
 import notify
 
-from sender import Sender
+from mail import Mail
 
 def main():
     config = importConfig()
@@ -44,13 +44,13 @@ def main():
     except:
         error("Bad Credentials")
 
-    sender = []
+    mail = []
     try:
-        sender = Sender(config['sender'])
+        mail = Mail(config['mail'])
     except:
-        print("WARN: no sender found in conf.yaml")
+        print("WARN: no mail found in conf.yaml")
 
-    notify.start(subreddits, reddit, sender)
+    notify.start(subreddits, reddit, mail)
 
 def importConfig():
     print("Importing config.yaml...", end = "")

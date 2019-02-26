@@ -2,7 +2,7 @@ import threading
 import time
 import json
 
-def crawl(sub, reddit, sender, run_event):
+def crawl(sub, reddit, mail, run_event):
     print(sub.name, "STARTED.")
     start_time = time.time()
     life_time = sub.life_time + start_time
@@ -21,7 +21,7 @@ def crawl(sub, reddit, sender, run_event):
         posts = [p for p in posts if p[1]+sub.post_life_time > time.time()]
 
         if len(new_posts):
-            notify_new(sub, new_posts, sender)
+            notify_new(sub, new_posts, mail)
         last_notify = time.time()
         while run_event.is_set() and time.time() < life_time and time.time() < last_notify+sub.crawl_rate:
             time.sleep(1)
@@ -33,9 +33,9 @@ def crawl(sub, reddit, sender, run_event):
             file.write("{}\n".format(json.dumps(post)))
 
     if len(new_posts):
-        notify_new(sub, new_posts, sender)
+        notify_new(sub, new_posts, mail)
 
-    notify_done(sub, sender)
+    notify_done(sub, mail)
     if sub.store_on_notify:
         file.close()
     print(sub.name, " FINISHED.")
@@ -58,20 +58,20 @@ def check_new(sub, reddit, posts):
             })
     return new_posts
 
-def notify_new(sub, posts, sender):
+def notify_new(sub, posts, mail):
     for recipient in sub.recipients:
-        sender.send_posts(recipient, sub, posts)
+        mail.send_posts(recipient, sub, posts)
 
-def notify_done(sub, sender):
+def notify_done(sub, mail):
     for recipient in sub.recipients:
-        sender.send_msg(recipient, "%s has finished"%sub.name, "")
+        mail.send_msg(recipient, "%s has finished"%sub.name, "")
 
-def start(subreddits, reddit, sender):
+def start(subreddits, reddit, mail):
     threads = []
     run_event = threading.Event()
     run_event.set()
     for sub in subreddits:
-        threads.append(threading.Thread(target=crawl, args=(sub, reddit, sender, run_event), name=sub.name))
+        threads.append(threading.Thread(target=crawl, args=(sub, reddit, mail, run_event), name=sub.name))
     for thread in threads:
         thread.start()
     
