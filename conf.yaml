@@ -11,6 +11,7 @@ subreddits:
         key_words: "example, keyword, keywords"
         delay: 0
         life_time: 1
+        post_life_time: 24
 sender:
     email_addr: "no-reply@example.com"
     sms_number: "55555"
