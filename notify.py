@@ -34,7 +34,7 @@ def crawl(sub, reddit, sender, run_event):
     posts = [p for p in posts if p[1]+sub.post_life_time > time.time()]
     notify_new(sub, posts, sender)
 
-    notify_done(sender)
+    notify_done(sub, sender)
     if sub.store_on_notify:
         file.close()
     print(sub.name, " FINISHED.")
@@ -50,6 +50,7 @@ def check_new(sub, reddit, posts):
             posts = [(k, v) if (k!=post.id) else (post.id, time.time()) for (k,v) in posts]
         elif any(word in post.title or word in post.selftext for word in sub.key_words):
             posts.append((post.id, time.time()))
+            print(vars(post))
             new_posts.append({
                 "title":post.title,
                 "body":post.selftext,
@@ -57,14 +58,13 @@ def check_new(sub, reddit, posts):
             })
     return new_posts
 
+def notify_new(sub, posts, sender):
+    for recipient in sub.recipients:
+        sender.send_posts(recipient, sub, posts)
 
-# TODO
-def notify_new(subreddit, posts, sender):
-    print("notify_new called")
-
-# TODO Is this necessary
-def notify_done(sender):
-    print("notify_done called")
+def notify_done(sub, sender):
+    for recipient in sub.recipients:
+        sender.send_msg(recipient, "%s has finished"%sub.name, "")
 
 def start(subreddits, reddit, sender):
     threads = []

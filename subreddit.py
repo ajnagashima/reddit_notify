@@ -51,7 +51,7 @@ class Subreddit:
         
         self.crawl_rate = int(crawl_rate)
         self.sort_by = sort_by
-        self.recipient = recipient.split(",")
+        self.recipients = recipient.split(",")
         self.store_on_notify = bool(store_on_notify)
         self.key_words = key_words.split(",")
         self.delay = int(delay)
