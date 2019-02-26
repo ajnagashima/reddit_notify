@@ -5,11 +5,15 @@ import praw
 import yaml
 # import subreddit
 from subreddit import Subreddit
+# import notify
+import notify
+
 
 def main():
     config = importConfig()
     creds = []
     sub_data = []
+
     print("Extracting credentials...", end = "")
     try:
         creds = config["credentials"]
@@ -38,6 +42,8 @@ def main():
             user_agent=creds['user_agent'])
     except:
         error("Bad Credentials")
+
+    notify.start(subreddits, reddit)
 
 def importConfig():
     print("Importing config.yaml...", end = "")
