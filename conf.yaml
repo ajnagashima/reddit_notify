@@ -4,12 +4,13 @@ credentials:
     user_agent: "notify_boy"
 subreddits:
     r/sub1:
-        crawl_rate: 120
+        crawl_rate: 20
         sort_by: "NEW"
         recipient: "email@example.com, 5555555555"
         store_on_notify: False
         key_words: "example, keyword, keywords"
         delay: 0
+        life_time: 1
 sender:
     email_addr: "no-reply@example.com"
     sms_number: "55555"
