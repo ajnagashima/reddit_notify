@@ -7,7 +7,7 @@ A bot the notifies a user through text or email when certain keywords are found 
 
 Using virtualenv is recommended when installing packages for python.
 * `praw`
-* `smtplib
+* `smtplib`
 * `email`
 * `threading`
 * `json`
