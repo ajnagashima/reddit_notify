@@ -12,7 +12,10 @@ def crawl(sub, reddit, mail, run_event):
     if sub.store_on_notify:
         file = open("%s_notifications.txt"%sub.name[2:], 'w+')
     while run_event.is_set() and (sub.life_time == 0 or time.time() < life_time):
-        new_posts = check_new(sub, reddit, posts)
+        time_end = time.time() + sub.delay
+        new_posts = []
+        while time.time() < time_end:
+            new_posts.append(check_new(sub, reddit, posts))
 
         if sub.store_on_notify:
             for post in new_posts:
