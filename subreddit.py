@@ -1,6 +1,8 @@
 import sys
 
 class Subreddit:
+    # Subreddit data is all optional because it has default values for extract_features()
+    # some features like recipient don't have a proper check, but in that case store on notify should be on.
     def extract_features(self,
             crawl_rate=60, 
             sort_by='NEW', 
@@ -10,6 +12,7 @@ class Subreddit:
             delay=0,
             life_time=0, 
             post_life_time=24):
+
         try:
             if int(crawl_rate) < 0:
                 print("ERROR: crawl_rate cannot be negative")
